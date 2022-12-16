@@ -38,9 +38,7 @@ public class MicrosoftUpdateServiceRestImpl implements MicrosoftUpdateServiceRes
 	 * 
 	 * @param id
 	 */
-	public void getCvrf(String id) {
-
-		System.out.println("id: " + id);
+	public void getCvrf(String id) {		
 
 		String endpoint = new String(urlHost + "/cvrf/{id}");
 		restTemplate = new RestTemplate();
@@ -48,9 +46,7 @@ public class MicrosoftUpdateServiceRestImpl implements MicrosoftUpdateServiceRes
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", id);
 
-		ValueMicrosoftDetailVO valor = restTemplate.getForObject(endpoint, ValueMicrosoftDetailVO.class, params);
-
-		System.out.println(valor);
+		ValueMicrosoftDetailVO valor = restTemplate.getForObject(endpoint, ValueMicrosoftDetailVO.class, params);		
 
 	}
 
