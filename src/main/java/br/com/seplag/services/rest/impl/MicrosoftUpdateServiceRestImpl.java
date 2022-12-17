@@ -1,18 +1,18 @@
 package br.com.seplag.services.rest.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.seplag.services.MicrosoftUpdateService;
 import br.com.seplag.services.rest.MicrosoftUpdateServiceRest;
 import br.com.seplag.vo.MicrosoftSecurityDetailVO;
-import br.com.seplag.vo.ValueMicrosoftDetailVO;
 
 /**
  * 
@@ -27,55 +27,46 @@ public class MicrosoftUpdateServiceRestImpl implements MicrosoftUpdateServiceRes
 	@Value("${spring.url.base}")
 	private String urlHost;
 
-	public RestTemplate restTemplate;
+	private static final Logger log = LoggerFactory.getLogger(MicrosoftUpdateServiceRestImpl.class);
 
 	@Autowired
 	@Qualifier("microsoftUpdateServiceImpl")
 	public MicrosoftUpdateService microsoftService;
 
 	/**
-	 * Obtém Common Vulnerability Reporting Framework pelo ID
-	 * 
-	 * @param id
-	 */
-	public void getCvrf(String id) {		
-
-		String endpoint = new String(urlHost + "/cvrf/{id}");
-		restTemplate = new RestTemplate();
-
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", id);
-
-		ValueMicrosoftDetailVO valor = restTemplate.getForObject(endpoint, ValueMicrosoftDetailVO.class, params);		
-
-	}
-
-	/**
 	 * Obtém todas as atualizações de segurança microsoft
 	 * 
 	 * @author Artur Cavalcante
+	 * @throws Exception
 	 * @since 14/12/2022 14:55
 	 */
-	public void getUpdates() {
+	public void getUpdates() throws Exception {
 
-		restTemplate = new RestTemplate();
-		String endpoint = new String(urlHost + "/updates/");
+		try {
+
+			String endpoint = new String(urlHost + "/updates/");
+
+			MicrosoftSecurityDetailVO microsoftDetailVO = getMicrosoftVO(endpoint);
+
+			microsoftService.save(microsoftDetailVO.getValue(), microsoftDetailVO.getContext());
+		} catch (HttpClientErrorException e) {
+
+			log.error(e.getMessage());
+			throw new Exception(e);
+		}
+
+	}
+
+	@Override
+	public MicrosoftSecurityDetailVO getMicrosoftVO(String endpoint) throws RestClientException {
+
+		RestTemplate restTemplate = new RestTemplate();
 
 		MicrosoftSecurityDetailVO microsoftDetailVO = restTemplate.getForObject(endpoint,
 				MicrosoftSecurityDetailVO.class);
 
-		microsoftService.save(microsoftDetailVO.getValue(), microsoftDetailVO.getContext());
+		return microsoftDetailVO;
 
-	}
-
-	/**
-	 * Obtém as atualizações de segurança pela key
-	 * 
-	 * @param key
-	 */
-	public void getUpdates(String key) {
-		
-		// TODO Obter Updates by key
 	}
 
 }

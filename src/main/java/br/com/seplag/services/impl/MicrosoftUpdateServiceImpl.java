@@ -166,17 +166,5 @@ public class MicrosoftUpdateServiceImpl implements MicrosoftUpdateService {
 			log.error(e.getMessage());
 		}
 	}
-
-	@Override
-	public void getUpdates() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void getUpdates(String key) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }

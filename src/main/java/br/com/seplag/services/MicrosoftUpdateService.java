@@ -12,11 +12,7 @@ public interface MicrosoftUpdateService {
 
 	public Optional<List<ValueMicrosoftDetailVO>> getPatchs();
 
-	public void save(List<ValueMicrosoftDetailVO> lista, String titulo);
-
-	public void getUpdates();
-
-	public void getUpdates(String key);
+	public void save(List<ValueMicrosoftDetailVO> lista, String titulo);	
 
 	public Page<ValueMicrosoftDetailVO> filtrar(Pageable page, ValueMicrosoftDetailVO filtro) throws Exception;
 

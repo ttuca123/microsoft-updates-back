@@ -21,9 +21,13 @@ public class MicrosoftUpdateSchedule {
 	@Scheduled(fixedRate = 300000)
 	public void verificarPagamentosExpirados() {
 
-		log.info("time: " + new Date());
-
-		microsoftService.getUpdates();
+		try {
+			log.info("time: " + new Date());
+			microsoftService.getUpdates();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block			
+			log.error(e.getMessage());
+		}
 	}
 
 }
