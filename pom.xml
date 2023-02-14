@@ -1,19 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>seplag-microsoft</groupId>
-	<artifactId>seplag-microsoft</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	<groupId>seplag-microsoft</groupId>
+	<artifactId>seplag-microsoft</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
 	<name>seplag-microsoft</name>
 	<description>Sistema responsável por consumir e gravar informações da API microsoft</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<project.java.version>1.8</project.java.version>
+		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>
@@ -44,8 +47,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.24</version>
-			<scope>provider</scope>
+			<version>1.18.24</version>			
 		</dependency>
 
 		<dependency>
@@ -68,12 +70,6 @@
 			<version>1.9.5</version>
 			<scope>test</scope>
 		</dependency>
-
-
-	</dependencies>
-
-	<build>
-		<finalName>seplag-microsoft</finalName>
-	</build>
+	</dependencies>	
 
 </project>
